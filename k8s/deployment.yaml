@@ -14,14 +14,14 @@ spec:
      spec:
        containers:
          - name: mongodb
-           image: mongo:4.4.9
+           image: mongo:4.4.6
            ports:
              - containerPort: 27017
            env:
              - name: MONGO_INITDB_ROOT_USERNAME
                value: mongouser
              - name: MONGO_INITDB_ROOT_PASSWORD
-               value: mongopwd               
+               value: mongopwd
 ---
 #Service MongoDB
 apiVersion: v1
@@ -41,7 +41,7 @@ kind: Deployment
 metadata:
   name: web
 spec:
-   replicas: 2
+   replicas: 8
    selector:
      matchLabels:
        app: web
@@ -52,14 +52,14 @@ spec:
      spec:
        containers:
          - name: web
-           image: luismartorano/rotten-potatoes:1.0
+           image: luismartorano/rotten-potatoes:latest
            ports:
              - containerPort: 5000
            env:
              - name: MONGO_DB
                value: "admin"
              - name: MONGODB_HOST
-               value: "localhost"
+               value: "mongodb" #nome do container do mongodb host
              - name: MONGODB_PORT
                value: "27017"
              - name: MONGODB_USERNAME
@@ -76,7 +76,7 @@ spec:
   selector: 
     app: web
   ports:
-    - port: 80
-      targetPort: 5000
-      nodePort: 30000
+    - port: 80  # this is the service port, can be anything
+      targetPort: 5000  # this is the container port (must match the port your pod is listening on)
+      nodePort: 30000  # if you don't specify this it randomly picks an available port in your NodePort range  
   type: NodePort
