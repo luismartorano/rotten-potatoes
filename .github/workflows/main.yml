@@ -27,8 +27,8 @@ jobs:
           file: ./src/Dockerfile
           push: true
           tags: |
-            fabricioveronez/rotten-potatoes:latest
-            fabricioveronez/rotten-potatoes:${{ github.run_number }} 
+            luismartorano/rotten-potatoes:latest
+            luismartorano/rotten-potatoes:${{ github.run_number }} 
   CD:
     needs: [CI]
     runs-on: ubuntu-latest

@@ -41,7 +41,7 @@ kind: Deployment
 metadata:
   name: web
 spec:
-   replicas: 8
+   replicas: 10
    selector:
      matchLabels:
        app: web
@@ -79,4 +79,4 @@ spec:
     - port: 80  # this is the service port, can be anything
       targetPort: 5000  # this is the container port (must match the port your pod is listening on)
       nodePort: 30000  # if you don't specify this it randomly picks an available port in your NodePort range  
-  type: NodePort
+  type: LoadBalancer
